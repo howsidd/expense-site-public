@@ -1,0 +1,9 @@
+{
+  "name": "expense-site",
+  "private": true,
+  "description": "₹ Dashboard. Static site on Cloudflare Pages; the only build step is the tests (Pages build command: npm test).",
+  "scripts": {
+    "test": "node model.test.mjs && (test -d sync-worker/node_modules/@anthropic-ai/sdk || npm --prefix sync-worker ci --omit=dev --no-audit --no-fund) && node sync-worker/test.mjs"
+  },
+  "type": "module"
+}

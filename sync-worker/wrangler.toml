@@ -1,0 +1,22 @@
+name = "hdfc-sync"
+main = "index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true # https://hdfc-sync.<you>.workers.dev/sms for the iPhone SMS automation; every other path is 404
+
+[triggers]
+crons = ["*/15 * * * *", "5,35 * * * *", "30 21 * * 6", "30 23 * * *", "0 22 * * *"] # sync; Zepto split (ZEPTO_CRON); weekly backup (BACKUP_CRON); snapshot safety net (SNAPSHOT_CRON); Claude fixer (FIX_CRON)
+
+# Remembers which Gmail messages were already handled, so each run fetches only new ones.
+[[kv_namespaces]]
+binding = "SEEN"
+id = "YOUR_KV_NAMESPACE_ID"
+
+# Workers AI (free daily allowance): guesses the category of payments no rule recognises (aiGuess in index.js).
+[ai]
+binding = "AI"
+
+[observability]
+enabled = true # run results in the Cloudflare dashboard: Workers → hdfc-sync → Logs
+
+# Secrets (set with `npx wrangler secret put <NAME>`, never in this file):
+# GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REFRESH_TOKEN, NOTION_TOKEN, SMS_TOKEN, ANTHROPIC_API_KEY (the nightly fixer; Finance workspace key)

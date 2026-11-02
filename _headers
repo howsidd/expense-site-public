@@ -1,0 +1,3 @@
+# Cloudflare Pages: always fetch the newest page and scripts (the site is tiny; freshness matters more).
+/*
+  Cache-Control: no-cache
